@@ -1,14 +1,28 @@
-import React, { useState } from "react";
-import { signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/Store/userSlice";
 
 function Header() {
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, displayName, email } = user;
+        dispatch(addUser({ uid, displayName, email }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
   function handleSignOut() {
     signOut(auth)
       .then(() => {
@@ -19,6 +33,7 @@ function Header() {
         console.log("An Error occured", error);
       });
   }
+
   if (error)
     return <ErrorPage message={error.message} statusCode={error.status} />;
   return (

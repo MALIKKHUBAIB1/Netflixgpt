@@ -43,7 +43,6 @@ function Login() {
             .then(() => {
               const { email, password, uid, displayName } = auth.currentUser;
               disPatch(addUser({ email, password, uid, displayName }));
-              navigate("/browse");
             })
             .catch((error) => {
               setError(error);
@@ -59,7 +58,6 @@ function Login() {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
