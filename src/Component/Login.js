@@ -7,8 +7,14 @@ import {
   isUserEmailValid,
   isUserNameValid,
 } from "../utils/Validation";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 function Login() {
   const [isSignInForm, setSignInForm] = useState(true);
+  const [error, setError] = useState(null);
   function toogleSignForm() {
     setSignInForm(!isSignInForm);
   }
@@ -16,7 +22,38 @@ function Login() {
     if (isSignInForm) {
       delete values.username;
     }
-    console.log(values);
+    //sign in || sign up
+    // if the value is null then return this is not requred but best practice to do
+    if (!values) return;
+    // signup
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          // Signed up
+          console.log(userCredential);
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setError(errorMessage);
+          console.log(errorCode, errorMessage);
+        });
+    }
   }
 
   return (
@@ -66,13 +103,18 @@ function Login() {
                 placeholder="enter your password"
                 validate={isPasswordValid}
               />
-
+              {error && (
+                <p className="text-sm text-red-600">
+                  {error === "Firebase: Error (auth/invalid-credential)." &&
+                    "invalid email or password"}
+                </p>
+              )}
               {touched.password && errors.password && (
                 <span className="text-red-600">{errors.password}</span>
               )}
               <button
                 type="submit"
-                className="bg-red-700  my-6 p-4 rounded-md font-bold w-full"
+                className="bg-red-700  my-6 p-4 rounded-md font-bold w-full disabled:cursor-not-allowed"
                 disabled={!isValid || !dirty}
               >
                 {isSignInForm ? "Sign In" : "Sign Up"}
