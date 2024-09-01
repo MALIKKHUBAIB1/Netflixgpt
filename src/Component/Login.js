@@ -2,45 +2,23 @@ import React, { useState } from "react";
 import Header from "./Header";
 import { Formik, Form } from "formik";
 import InputFeild from "../utils/InputFeild";
+import {
+  isPasswordValid,
+  isUserEmailValid,
+  isUserNameValid,
+} from "../utils/Validation";
 function Login() {
   const [isSignInForm, setSignInForm] = useState(true);
   function toogleSignForm() {
     setSignInForm(!isSignInForm);
   }
-  function isUserEmailValid(value) {
-    let error;
-    if (!value) {
-      error = "required";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "invalid email address";
-    }
-    return error;
-  }
-  function isUserNameValid(value) {
-    let error;
-    if (!value) {
-      error = "required";
-    } else if (value.length <= 3) {
-      error = "too Short";
-    } else if (value.length > 16) {
-      error = "too Long";
-    }
-    return error;
-  }
   function submitHandler(values) {
+    if (isSignInForm) {
+      delete values.username;
+    }
     console.log(values);
   }
-  function isPasswordValid(value) {
-    let error;
-    if (!value) {
-      error = "required";
-    } else if (value.length < 6) {
-      error = "password must be at least 6 character";
-    } else if (value.length > 16) {
-      error = "password must be less than 16 character";
-    }
-    return error;
-  }
+
   return (
     <div>
       <Header />
@@ -54,7 +32,7 @@ function Login() {
         initialValues={{ email: "", password: "", username: "" }}
         onSubmit={submitHandler}
       >
-        {({ errors, touched }) => {
+        {({ errors, touched, isValid, dirty }) => {
           return (
             <Form className="w-3/12  absolute p-12 bg-black bg-opacity-80 mx-auto my-36 left-0 right-0 items-start text-white  rounded-lg">
               <h1 className="font-bold text-3xl py-4 text-start">
@@ -95,6 +73,7 @@ function Login() {
               <button
                 type="submit"
                 className="bg-red-700  my-6 p-4 rounded-md font-bold w-full"
+                disabled={!isValid || !dirty}
               >
                 {isSignInForm ? "Sign In" : "Sign Up"}
               </button>
