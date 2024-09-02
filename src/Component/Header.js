@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/Store/userSlice";
+import { NETFLIX_LOGO, SIGNOUT_LOGO } from "../utils/constant";
 
 function Header() {
   const [error, setError] = useState(null);
@@ -12,7 +13,7 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, displayName, email } = user;
         dispatch(addUser({ uid, displayName, email }));
@@ -22,11 +23,11 @@ function Header() {
         navigate("/");
       }
     });
-  }, []);
+    return ()=>unsubscribe();
+  }, [dispatch, navigate]);
   function handleSignOut() {
     signOut(auth)
       .then(() => {
-        navigate("/");
       })
       .catch((error) => {
         setError(error);
@@ -40,14 +41,14 @@ function Header() {
     <div className="absolute w-screen px-8 py-3 bg-gradient-to-b from-black z-10 flex justify-between">
       <img
         className="w-44"
-        src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+        src={NETFLIX_LOGO}
         alt="Logo Netflix "
       />
       {user && (
         <div className="flex justify-between">
           <img
             className="w-12 h-12 rounded-lg"
-            src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg"
+            src={SIGNOUT_LOGO}
             alt="signout-logo"
           />
           <button className="mx-2 text-white font-bold" onClick={handleSignOut}>

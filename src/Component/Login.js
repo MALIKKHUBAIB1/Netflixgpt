@@ -13,14 +13,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/Store/userSlice";
+import { BACKGROUNDURL } from "../utils/constant";
 function Login() {
   const [isSignInForm, setSignInForm] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
   const disPatch = useDispatch();
   function toggleSignForm() {
     setSignInForm(!isSignInForm);
@@ -68,9 +67,9 @@ function Login() {
     }
   }
 
-  if (error)
+  if (error) {
     return <ErrorPage message={error.message} statusCode={error.status} />;
-
+  }
   return (
     <div>
       <Header />
@@ -78,7 +77,7 @@ function Login() {
       <div
         className="relative h-screen w-full flex items-center justify-center bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: `url("https://assets.nflxext.com/ffe/siteui/vlv3/dae1f45f-c2c5-4a62-8d58-6e1b0c6b2d8e/6d1fb8a4-5844-42a4-9b01-1c6c128acf19/IN-en-20240827-TRIFECTA-perspective_WEB_c292a608-cdc6-4686-8dc8-405bfcf753af_medium.jpg")`,
+          backgroundImage: `url(${BACKGROUNDURL})`,
         }}
       >
         <Formik
