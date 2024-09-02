@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+#Browse Features(after login) basicalyy it like ladning page after the login inot the page
+MainContainer
+ -VideoBackround 
+ -videoTitle
+SecondaryContainer 
+ -MovieList
+ -MovieListCard 
+
