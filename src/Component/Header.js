@@ -23,12 +23,11 @@ function Header() {
         navigate("/");
       }
     });
-    return ()=>unsubscribe();
+    return () => unsubscribe();
   }, [dispatch, navigate]);
   function handleSignOut() {
     signOut(auth)
-      .then(() => {
-      })
+      .then(() => {})
       .catch((error) => {
         setError(error);
         console.log("An Error occured", error);
@@ -38,14 +37,10 @@ function Header() {
   if (error)
     return <ErrorPage message={error.message} statusCode={error.status} />;
   return (
-    <div className="absolute w-screen px-8 py-3 bg-gradient-to-b from-black z-10 flex justify-between">
-      <img
-        className="w-44"
-        src={NETFLIX_LOGO}
-        alt="Logo Netflix "
-      />
+    <div className=" absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+      <img className="w-44" src={NETFLIX_LOGO} alt="Logo Netflix " />
       {user && (
-        <div className="flex justify-between">
+        <div className="flex items-center">
           <img
             className="w-12 h-12 rounded-lg"
             src={SIGNOUT_LOGO}

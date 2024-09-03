@@ -7,13 +7,13 @@ function MainContainer() {
   const moviesData = useSelector((state) => state.movies?.nowPlayingMovies);
   if (!moviesData) return "loading";
   else console.log(moviesData[0]);
-  const { original_title, overview,id } = moviesData[0];
+  const { original_title, overview, id } = moviesData[1];
 
   return (
-    <div className="">
-      <VideoBackground movieId = {id} />
+    <>
       <VideoTitle title={original_title} overview={overview} />
-    </div>
+      <VideoBackground movieId={id} />
+    </>
   );
 }
 

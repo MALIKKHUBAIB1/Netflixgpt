@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const ErrorPage = ({ message, statusCode }) => {
   return (
+    <>
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
       <h1 className="text-9xl font-bold">{statusCode}</h1>
       <p className="text-2xl mt-4">{message}</p>
@@ -23,6 +24,7 @@ const ErrorPage = ({ message, statusCode }) => {
         className="w-1/2 mt-10"
       />
     </div>
+    </>
   );
 };
 
