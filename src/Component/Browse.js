@@ -7,11 +7,15 @@ import ErrorPage from "../pages/ErrorPage";
 import useFetchpopularMovie from "../Hooks/useFetchPopularMovie";
 import useFetchTopRated from "../Hooks/useFetchTopReated";
 import useFetchUpcoming from "../Hooks/useUpcomingMovie";
+import GptSearch from "./GptSearch";
+import { useSelector } from "react-redux";
 
 function Browse() {
   const { error, loading } = usePlayingNowMovies(
     "https://api.themoviedb.org/3/movie/now_playing?&page=1"
   );
+  const search = useSelector((state) => state.gpt.showGptSearch);
+
   useFetchpopularMovie();
   useFetchTopRated();
   useFetchUpcoming();
@@ -27,10 +31,14 @@ function Browse() {
   return (
     <div>
       <Header />
-      <>
-        <MainContainer />
-        <SecondaryContainer />
-      </>
+      {search ? (
+        <GptSearch />
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
     </div>
   );
 }

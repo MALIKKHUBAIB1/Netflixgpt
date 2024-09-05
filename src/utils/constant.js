@@ -18,3 +18,18 @@ export const API_OPTIONS = {
 };
 
 export const IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const SUPPORTED_LANGUAGES = [
+  {
+    indentifire: "en",
+    name: "English",
+  },
+  {
+    indentifire: "hindi",
+    name: "Hindi",
+  },
+  {
+    indentifire: "spanish",
+    name: "Spanish",
+  },
+];

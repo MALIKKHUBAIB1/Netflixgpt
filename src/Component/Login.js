@@ -50,7 +50,6 @@ function Login() {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
         });
     } else {
       signInWithEmailAndPassword(auth, values.email, values.password)
@@ -59,10 +58,8 @@ function Login() {
           console.log(user);
         })
         .catch((error) => {
-          const errorCode = error.code;
           const errorMessage = error.message;
           setError(errorMessage);
-          console.log(errorCode, errorMessage);
         });
     }
   }
