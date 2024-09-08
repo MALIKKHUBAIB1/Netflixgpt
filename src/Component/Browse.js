@@ -11,6 +11,7 @@ import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
 import useFetchTrailer from "../Hooks/useFetchModalTrailer";
 import Modal from "./Modal";
+import useFetchTvShow from "../Hooks/useFetchTvShow";
 
 function Browse() {
   const { error, loading } = usePlayingNowMovies(
@@ -23,9 +24,10 @@ function Browse() {
     useFetchpopularMovie();
   const { error: errorTopRated, loading: loadingTopRated } = useFetchTopRated();
   const { error: errorUpcoming, loading: loadingUpcoming } = useFetchUpcoming();
-
+  const { error: errorTvShow, loadingTvShow } = useFetchTvShow();
   useFetchTrailer(id);
-  const combinedError = error || errorPopular || errorTopRated || errorUpcoming;
+  const combinedError =
+    error || errorPopular || errorTopRated || errorUpcoming || errorTvShow;
 
   if (combinedError) {
     return (
@@ -37,7 +39,13 @@ function Browse() {
   }
 
   // Handle loading states from multiple hooks
-  if (loading || loadingPopular || loadingTopRated || loadingUpcoming) {
+  if (
+    loading ||
+    loadingPopular ||
+    loadingTopRated ||
+    loadingUpcoming ||
+    loadingTvShow
+  ) {
     return "loading...";
   }
 

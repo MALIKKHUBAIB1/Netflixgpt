@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/Store/userSlice";
@@ -60,7 +60,9 @@ function Header() {
       <div className="text-white flex">
         <img className="w-44" src={NETFLIX_LOGO} alt="Logo Netflix " />
         {Header_NAME.map((name) => {
-          return <HeaderList listName={name.name} key={name.id} />;
+          return (
+            <HeaderList listName={name.name} key={name.id} path={name.name} />
+          );
         })}
       </div>
       {user && (
@@ -79,6 +81,10 @@ function Header() {
               ))}
             </select>
           )}
+          <Link to="watchlist" className="text-white mr-8 m-2 hover:text-slate-700">
+            Watchlist
+          </Link>
+
           <button
             className="p-2 mr-3 w-36 bg-green-300 rounded-xl"
             onClick={handleGptSearch}

@@ -4,6 +4,7 @@ import MovieSlice from "./MovieSlice";
 import GptSearchSlice from "./GptSearchSlice";
 import lanReducers from "./languageconfiguration";
 import ModaId from "./ModalSlice";
+import watchListReducer from "./watchList";
 const appStore = configureStore({
   reducer: {
     user: userReducer,
@@ -11,6 +12,7 @@ const appStore = configureStore({
     gpt: GptSearchSlice,
     lang: lanReducers,
     modal: ModaId,
+    watch: watchListReducer,
   },
 });
 export default appStore;

@@ -10,6 +10,7 @@ function Modal() {
   function closeModalHandler() {
     dispatch(toogleModal({ showModal: false }));
   }
+
   useEffect(() => {
     // Prevent scrolling on the body when the modal is open
     document.body.style.overflow = "hidden";
