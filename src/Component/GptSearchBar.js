@@ -1,18 +1,25 @@
 import React, { useRef } from "react";
 import lang from "../utils/LanguageConstant";
 import { useSelector } from "react-redux";
-
+import openai from "../utils/openai.js";
 function GptSearchBar() {
   const langconfuguration = useSelector((state) => state.lang.lang);
-  const searchRef = useRef(null);
+  const searchText = useRef(null);
 
-  function searchHandler() {
-    searchRef.current.value = "";
+  async function searchHandler() {
+    //make an api call to get the movie results
+
+    const serachResult = await openai.chat.completions.create({
+      messages: [{ role: "user", content: "Say this is a test" }],
+      model: "gpt-3.5-turbo",
+    });
+    console.log(serachResult.choices);
+    searchText.current.value = "";
   }
 
   function clearSearchHandler() {
-    if (searchRef.current) {
-      searchRef.current.value = "";
+    if (searchText.current) {
+      searchText.current.value = "";
     }
   }
 
@@ -22,7 +29,7 @@ function GptSearchBar() {
         <div className="relative col-span-12 sm:col-span-9">
           <input
             type="text"
-            ref={searchRef}
+            ref={searchText}
             className="p-4 pr-12 w-full rounded-lg  text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500"
             placeholder={lang[langconfuguration].gptSeachPlaceHolder}
           />

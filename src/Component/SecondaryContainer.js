@@ -6,6 +6,7 @@ function SecondaryContainer() {
   const popularMovies = useSelector((state) => state.movies?.popularMovies);
   const topRatedMovie = useSelector((state) => state.movies?.topRatedMovies);
   const upcomingMovies = useSelector((state) => state.movies?.upcomingMovies);
+  
   return (
     <div className=" bg-black pl-12">
       <div className="-mt-52  relative z-20">

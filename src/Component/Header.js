@@ -6,6 +6,7 @@ import ErrorPage from "../pages/ErrorPage";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/Store/userSlice";
 import {
+  Header_NAME,
   NETFLIX_LOGO,
   SIGNOUT_LOGO,
   SUPPORTED_LANGUAGES,
@@ -13,6 +14,7 @@ import {
 import { toogleGptSeachView } from "../utils/Store/GptSearchSlice";
 import LanguageOptions from "../utils/LanguageOptions";
 import { changeLanguage } from "../utils/Store/languageconfiguration";
+import HeaderList from "./HeaderList";
 
 function Header() {
   const [error, setError] = useState(null);
@@ -55,7 +57,12 @@ function Header() {
     return <ErrorPage message={error.message} statusCode={error.status} />;
   return (
     <div className=" absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
-      <img className="w-44" src={NETFLIX_LOGO} alt="Logo Netflix " />
+      <div className="text-white flex">
+        <img className="w-44" src={NETFLIX_LOGO} alt="Logo Netflix " />
+        {Header_NAME.map((name) => {
+          return <HeaderList listName={name.name} key={name.id} />;
+        })}
+      </div>
       {user && (
         <div className="flex items-center">
           {search && (

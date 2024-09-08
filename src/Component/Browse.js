@@ -9,25 +9,38 @@ import useFetchTopRated from "../Hooks/useFetchTopReated";
 import useFetchUpcoming from "../Hooks/useUpcomingMovie";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
+import useFetchTrailer from "../Hooks/useFetchModalTrailer";
+import Modal from "./Modal";
 
 function Browse() {
   const { error, loading } = usePlayingNowMovies(
     "https://api.themoviedb.org/3/movie/now_playing?&page=1"
   );
   const search = useSelector((state) => state.gpt.showGptSearch);
+  const id = useSelector((state) => state?.modal?.id);
+  const isOpen = useSelector((state) => state?.modal?.showModal);
+  const { error: errorPopular, loading: loadingPopular } =
+    useFetchpopularMovie();
+  const { error: errorTopRated, loading: loadingTopRated } = useFetchTopRated();
+  const { error: errorUpcoming, loading: loadingUpcoming } = useFetchUpcoming();
 
-  useFetchpopularMovie();
-  useFetchTopRated();
-  useFetchUpcoming();
-  if (error) {
+  useFetchTrailer(id);
+  const combinedError = error || errorPopular || errorTopRated || errorUpcoming;
+
+  if (combinedError) {
     return (
       <ErrorPage
-        message={error?.message || "something went Wrong"}
-        statusCode={error.status}
+        message={combinedError?.message || "Something went wrong"}
+        statusCode={combinedError?.status || 500}
       />
     );
   }
-  if (loading) return "loading";
+
+  // Handle loading states from multiple hooks
+  if (loading || loadingPopular || loadingTopRated || loadingUpcoming) {
+    return "loading...";
+  }
+
   return (
     <div>
       <Header />
@@ -39,6 +52,7 @@ function Browse() {
           <SecondaryContainer />
         </>
       )}
+      {isOpen && <Modal />}
     </div>
   );
 }

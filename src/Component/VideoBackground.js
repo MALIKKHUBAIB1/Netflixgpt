@@ -4,7 +4,6 @@ import useFetchTrailer from "../Hooks/useFetchTrailer";
 
 function VideoBackground({ movieId }) {
   const id = useSelector((state) => state?.movies?.getTrailerId);
-
   useFetchTrailer(movieId);
   return (
     <div className="w-screen">
