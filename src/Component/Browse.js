@@ -12,14 +12,14 @@ import { useSelector } from "react-redux";
 import useFetchTrailer from "../Hooks/useFetchModalTrailer";
 import Modal from "./Modal";
 import useFetchTvShow from "../Hooks/useFetchTvShow";
-
-function Browse() {
+import VideoPlayer from "./VideoPlayer";
+function Browse({ isOpen }) {
   const { error, loading } = usePlayingNowMovies(
     "https://api.themoviedb.org/3/movie/now_playing?&page=1"
   );
   const search = useSelector((state) => state.gpt.showGptSearch);
   const id = useSelector((state) => state?.modal?.id);
-  const isOpen = useSelector((state) => state?.modal?.showModal);
+  // const isOpen = useSelector((state) => state?.modal?.showModal);
   const { error: errorPopular, loading: loadingPopular } =
     useFetchpopularMovie();
   const { error: errorTopRated, loading: loadingTopRated } = useFetchTopRated();
@@ -48,7 +48,6 @@ function Browse() {
   ) {
     return "loading...";
   }
-
   return (
     <div>
       <Header />
@@ -60,7 +59,7 @@ function Browse() {
           <SecondaryContainer />
         </>
       )}
-      {isOpen && <Modal />}
+      {isOpen && <VideoPlayer />}
     </div>
   );
 }

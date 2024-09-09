@@ -1,7 +1,6 @@
 import React from "react";
 import Moviecard from "./Moviecard";
 
-
 function MovieList({ title, movies }) {
   return (
     <div className="p-6 text-start">

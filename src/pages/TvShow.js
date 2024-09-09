@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MovieCard from "../Component/MovieCard";
+import MovieCard from "../Component/MovieCards";
 
 function TvShow() {
   const movies = useSelector((state) => state.movies?.tvshowMovies);

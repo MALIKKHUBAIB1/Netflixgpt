@@ -1,14 +1,21 @@
 import React from "react";
 import { IMAGE_URL } from "../utils/constant";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addWatchList } from "../utils/Store/watchList";
+import { getTrailerId, toogleModal } from "../utils/Store/ModalSlice";
+import { addWatchHistory } from "../utils/Store/WatchHistorySlice";
 function MovieCard({ movie }) {
   const dispatch = useDispatch();
   function handleWatchList(movie) {
     dispatch(addWatchList(movie));
   }
+  function handleAddId(id) {
+    dispatch(getTrailerId(id));
+    dispatch(toogleModal({ showModal: true }));
+    dispatch(addWatchHistory(movie));
+  }
   return (
-    <div className="max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow dark:bg-gray-900 dark:border-gray-800">
+    <div className="max-w-sm bg-gray-800 border border-gray-700 rounded-lg shadow dark:bg-gray-900 dark:border-gray-800 cursor-pointer">
       <img
         className="rounded-t-lg w-full"
         src={
@@ -29,6 +36,12 @@ function MovieCard({ movie }) {
             "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order."}
           ....
         </p>
+        <div
+          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 cursor-pointer mr-3"
+          onClick={() => handleAddId(movie.id)}
+        >
+          Watch
+        </div>
         <div
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 cursor-pointer"
           onClick={() => handleWatchList(movie)}

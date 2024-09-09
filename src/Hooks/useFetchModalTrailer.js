@@ -4,12 +4,12 @@ import { API_OPTIONS } from "../utils/constant";
 import { getTrailerKey } from "../utils/Store/ModalSlice";
 
 function useFetchTrailer(movieId) {
+  console.log("useFetchTriler called");
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function getMovieData(movieId) {
       if (!movieId) return; // Exit if no movieId
-
       try {
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${movieId}/videos`,

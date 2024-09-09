@@ -7,12 +7,19 @@ const watchListSlice = createSlice({
   },
   reducers: {
     addWatchList: (state, action) => {
-      state.watchList.push(action.payload); // Correctly pushing the payload to the array
+      const existingCartItem = state.watchList.find(
+        (item) => item.id === action.payload.id
+      );
+      if (existingCartItem) {
+        return; // if cart item is exist do nothing
+      } else {
+        state.watchList.push(action.payload); // if the item is not exist push the item to the array
+      }
     },
     removeWatchList: (state, action) => {
       state.watchList = state.watchList.filter(
         (item) => item.id !== action.payload
-      ); // Correct reducer name
+      );
     },
   },
 });

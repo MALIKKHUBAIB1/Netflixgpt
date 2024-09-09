@@ -7,8 +7,8 @@ import TopRatedMovie from "../pages/TopRatedMovie";
 import UpcomingMovie from "../pages/UpcomingMovie";
 import BrowseRoot from "./BrowseRoot";
 import TvShow from "../pages/TvShow";
-import SerialMovie from "../pages/SerialMovie";
 import WatchList from "../pages/WatchList";
+import WatchHistory from "../pages/WatchHistory";
 function Body() {
   const router = createBrowserRouter([
     {
@@ -25,7 +25,7 @@ function Body() {
         { path: "toprated", element: <TopRatedMovie /> },
         { path: "upcoming", element: <UpcomingMovie /> },
         { path: "tvshow", element: <TvShow /> },
-        { path: "series", element: <SerialMovie /> },
+        { path: "history", element: <WatchHistory /> },
         { path: "watchlist", element: <WatchList /> },
       ],
     },

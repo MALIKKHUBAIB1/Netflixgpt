@@ -81,7 +81,16 @@ function Header() {
               ))}
             </select>
           )}
-          <Link to="watchlist" className="text-white mr-8 m-2 hover:text-slate-700">
+          <Link
+            to="history"
+            className="text-white mr-3 m-2 hover:text-slate-700"
+          >
+            History
+          </Link>
+          <Link
+            to="watchlist"
+            className="text-white mr-8 m-2 hover:text-slate-700"
+          >
             Watchlist
           </Link>
 
